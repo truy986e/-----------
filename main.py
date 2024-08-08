@@ -7,6 +7,7 @@ pygame.init()
 # Загрузка изображений и настроек
 lvlbg = 1
 lvlskin = 1
+win=1
 x = 1
 y = 1
 costx = 10
@@ -38,10 +39,11 @@ font2 = pygame.font.SysFont('times', 65)
 
 # Основной экран
 screen = pygame.display.set_mode((500, 800))
-score0 = 10000
-score00 = 200
+score0 = 0
+score00 = 0
 multitap = 1
 cost=100
+costg=10
 
 # Функция для отрисовки основного меню
 def main_menu():
@@ -73,7 +75,7 @@ def main_menu():
         screen.blit(shopb, shopb1)
         screen.blit(gameb, gameb1)
 
-        cost1 = font0.render(f'Cost {cost}', True, 'White', None)
+        cost1 = font0.render(f'Cost {cost}', True, 'Silver', None)
         cost0 = cost1.get_rect()
         cost0.center = (380, 790)
         screen.blit(cost1, cost0)
@@ -98,7 +100,7 @@ def main_menu():
 
 # Функция для окна магазина
 def shop():
-    global bg, background, score0, lvlbg, skin, lvlskin, coin, x, y, costx, costy,score00
+    global bg, background, score0, lvlbg, skin, lvlskin, coin, x, y, costx, costy,score00,win
     while True:
         screen.fill((0, 128, 0))  # Заливка фона магазина (например, черным цветом)
 
@@ -110,19 +112,32 @@ def shop():
         upb1 = upb.get_rect()
         upb1.center = (250, 50)
 
+        costbg = font0.render(f'Cost {costg}', True, 'Gold')
+        costbg1 = costbg.get_rect()
+        costbg1.center = (250, 100)
+
         upsb = font2.render('UPGRADE SKIN', True, 'White', 'Black')
         upsb1 = upsb.get_rect()
         upsb1.center = (250, 400)
 
+        costskin = font0.render(f'Cost {costg}', True, 'Gold')
+        costskin1 = costskin.get_rect()
+        costskin1.center = (250, 450)
+
         screen.blit(backb, backb1)
         screen.blit(upb, upb1)
         screen.blit(upsb, upsb1)
+        screen.blit(costbg,costbg1)
+        screen.blit(costskin, costskin1)
 
         mouse_pos = pygame.mouse.get_pos()
         screen.blit(mouse, mouse_pos)
 
         pygame.display.flip()
-
+        if lvlbg==10 and lvlskin==7 and win==1:
+            print("You win")
+            win=0
+            return
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if backb1.collidepoint(event.pos):
@@ -133,10 +148,9 @@ def shop():
                     background = pygame.image.load(bg)
                     score00 -= costx
                     if lvlbg == 10:
-                        print("You win")
                         x = 0
                         costx = 0
-                        return
+                        #return
                 if upsb1.collidepoint(event.pos) and score00 >= costy:
                     lvlskin += y
                     skin = 'c' + str(lvlskin) + '.png'
@@ -180,9 +194,8 @@ def play():
         width += speedw
         height += 30
         screen.fill((0, 128, 0))  # Заливка фона игры (например, зеленым цветом)
-        for i in range(10):
-            screen.blit(spikes, (50 * i, 600))
-            screen.blit(spikes1, (50 * i, 0))
+        screen.blit(spikes, (0, 600))
+        screen.blit(spikes1, (0, 0))
         spikes_rect = spikes.get_rect(topleft=(0,600))
         screen.blit(game1, (width, height))
         screen.blit(goldcoin, gold_rect)
@@ -217,7 +230,7 @@ def play():
             score00 += 1
             gold_rect.center = (1000,0)
             #gold_rect.center = (random.randint(50, 450), random.randint(100, 500))
-        if check_collision(game_rect, spikes_rect):
+        if check_collision(game_rect, spikes_rect) or check_collision(game_rect, spiker1.get_rect(topleft=(410, random1))) or check_collision(game_rect, spiker1.get_rect(topleft=(410, random2))) or check_collision(game_rect, spiker1.get_rect(topleft=(410, random3))) or (rightspike == 1 and (check_collision(game_rect, spikel1.get_rect(topleft=(0, random11))) or check_collision(game_rect,spikel1.get_rect(topleft=(0,random22))) or check_collision(game_rect, spikel1.get_rect(topleft=(0, random33))))):
             return
 
         for event in pygame.event.get():
