@@ -18,10 +18,14 @@ spike = 'spike.png'
 spike1 = 'spike1.png'
 spiker = 'spiker.png'
 spikel = 'spikel.png'
+upgradeskin='upgradeskin.png'
+upgradehome='upgradehome.png'
 game = 'g1.png'
 mouse_img = 'mouse.png'
 gold = 'goldcoin.png'
 silver = 'silvercoin.png'
+upgradeskin1=pygame.image.load((upgradeskin))
+upgradehome1=pygame.image.load((upgradehome))
 spiker1 = pygame.image.load(spiker)
 spikel1 = pygame.image.load(spikel)
 background = pygame.image.load(bg)
@@ -84,7 +88,7 @@ def main_menu():
         screen.blit(gameb, gameb1)
 
         mouse_pos = pygame.mouse.get_pos()
-        screen.blit(mouse, mouse_pos)
+        a=screen.blit(mouse, mouse_pos)
 
         pygame.display.flip()
 
@@ -113,28 +117,30 @@ def shop():
 
         upb = font2.render('UPGRADE HOME', True, 'White', 'Black')
         upb1 = upb.get_rect()
-        upb1.center = (250, 50)
+        upb1.center = (260, 50)
 
-        costbg = font0.render(f'Cost {costg}', True, 'Gold')
+        costbg = font_bold.render(f'Cost {costg}', True, 'Black')
         costbg1 = costbg.get_rect()
-        costbg1.center = (250, 100)
+        costbg1.center = (230, 185)
 
         upsb = font2.render('UPGRADE SKIN', True, 'White', 'Black')
         upsb1 = upsb.get_rect()
-        upsb1.center = (250, 400)
+        upsb1.center = (240, 400)
 
-        costskin = font0.render(f'Cost {costg}', True, 'Gold')
+        costskin = font_bold.render(f'Cost {costg}', True, 'Black')
         costskin1 = costskin.get_rect()
-        costskin1.center = (250, 450)
+        costskin1.center = (230, 535)
 
         screen.blit(backb, backb1)
-        screen.blit(upb, upb1)
-        screen.blit(upsb, upsb1)
+        b=screen.blit(upgradehome1, upb1)
+        c=screen.blit(upgradeskin1, upsb1)
         screen.blit(costbg, costbg1)
         screen.blit(costskin, costskin1)
+        screen.blit(goldcoin, (290,160))
+        screen.blit(goldcoin, (290, 510))
 
         mouse_pos = pygame.mouse.get_pos()
-        screen.blit(mouse, mouse_pos)
+        a=screen.blit(mouse, mouse_pos)
 
         pygame.display.flip()
         if lvlbg == 10 and lvlskin == 7 and win == 1:
@@ -145,7 +151,7 @@ def shop():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if backb1.collidepoint(event.pos):
                     return  # Возврат в главное меню
-                if upb1.collidepoint(event.pos) and score00 >= costx:
+                if check_collision(a,b) and score00 >= costx:
                     lvlbg += x
                     bg = 'bg' + str(lvlbg) + '.png'
                     background = pygame.image.load(bg)
@@ -154,7 +160,7 @@ def shop():
                         x = 0
                         costx = 0
                         # return
-                if upsb1.collidepoint(event.pos) and score00 >= costy:
+                if check_collision(a,c) and score00 >= costy:
                     lvlskin += y
                     skin = 'c' + str(lvlskin) + '.png'
                     coin = pygame.image.load(skin)
@@ -254,7 +260,7 @@ def play():
                 return  # Возврат в главное меню
             if event.type == pygame.KEYDOWN:
                 if pygame.key.get_pressed()[pygame.K_SPACE]:
-                    height -= 100
+                    height -= 150
                     game = 'g2.png' if speedw == 20 else 'g21.png'
                     game1 = pygame.image.load(game)
             if event.type == pygame.QUIT:
