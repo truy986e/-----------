@@ -50,8 +50,8 @@ font_bold = pygame.font.SysFont('times', 35, bold=True)
 
 # Основной экран
 screen = pygame.display.set_mode((500, 800))
-score0 = 893
-score00 = 400
+score0 = 0
+score00 = 0
 multitap = 1
 cost = 100
 costg = 10
