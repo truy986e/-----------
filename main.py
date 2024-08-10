@@ -7,13 +7,17 @@ pygame.init()
 # Загрузка изображений и настроек
 lvlbg = 1
 lvlskin = 1
+lvlbg1=1
+lvlskin1=1
 win = 1
 x = 1
 y = 1
 costx = 10
 costy = 10
 bg = 'bg' + str(lvlbg) + '.png'
+bg1='bg1'+str(lvlbg1)+'.png'
 skin = 'c' + str(lvlskin) + '.png'
+skin1 = 'c1' + str(lvlskin1) + '.png'
 spike = 'spike.png'
 spike1 = 'spike1.png'
 spiker = 'spiker.png'
@@ -29,11 +33,13 @@ upgradehome1=pygame.image.load((upgradehome))
 spiker1 = pygame.image.load(spiker)
 spikel1 = pygame.image.load(spikel)
 background = pygame.image.load(bg)
+background1 = pygame.image.load(bg1)
 spikes = pygame.image.load(spike)
 spikes1 = pygame.image.load(spike1)
 goldcoin = pygame.image.load(gold)
 silvercoin = pygame.image.load(silver)
 game1 = pygame.image.load(game)
+skins=pygame.image.load(skin1)
 coin = pygame.image.load(skin)
 mouse = pygame.image.load(mouse_img)
 font0 = pygame.font.SysFont('times', 30)
@@ -44,12 +50,13 @@ font_bold = pygame.font.SysFont('times', 35, bold=True)
 
 # Основной экран
 screen = pygame.display.set_mode((500, 800))
-score0 = 1000
-score00 = 1000
+score0 = 900
+score00 = 900
 multitap = 1
 cost = 100
 costg = 10
-
+widthskins1=50
+widthskins2=50
 # Функция для отрисовки основного меню
 def main_menu():
     global score0, score00
@@ -107,7 +114,7 @@ def main_menu():
 
 # Функция для окна магазина
 def shop():
-    global bg, background, score0, lvlbg, skin, lvlskin, coin, x, y, costx, costy, score00, win
+    global bg, background, score0, lvlbg, skin, lvlskin, coin, x, y, costx, costy, score00, win,lvlbg1,background1,bg1,skin1,skins,widthskins1, widthskins2,lvlskin1
     while True:
         screen.fill((0, 128, 0))  # Заливка фона магазина (например, черным цветом)
 
@@ -119,25 +126,27 @@ def shop():
         upb1 = upb.get_rect()
         upb1.center = (260, 50)
 
-        costbg = font_bold.render(f'Cost {costg}', True, 'Black')
+        costbg = font_bold.render(f'Cost {costx}', True, 'Black')
         costbg1 = costbg.get_rect()
-        costbg1.center = (230, 185)
+        costbg1.center = (220, 250)
 
         upsb = font2.render('UPGRADE SKIN', True, 'White', 'Black')
         upsb1 = upsb.get_rect()
         upsb1.center = (240, 400)
 
-        costskin = font_bold.render(f'Cost {costg}', True, 'Black')
+        costskin = font_bold.render(f'Cost {costy}', True, 'Black')
         costskin1 = costskin.get_rect()
-        costskin1.center = (230, 535)
+        costskin1.center = (230, 585)
 
         screen.blit(backb, backb1)
         b=screen.blit(upgradehome1, upb1)
         c=screen.blit(upgradeskin1, upsb1)
         screen.blit(costbg, costbg1)
         screen.blit(costskin, costskin1)
-        screen.blit(goldcoin, (290,160))
-        screen.blit(goldcoin, (290, 510))
+        screen.blit(goldcoin, (290,225))
+        screen.blit(goldcoin, (290, 560))
+        screen.blit(background1,(widthskins1,180))
+        screen.blit(skins, (widthskins2, 550))
 
         mouse_pos = pygame.mouse.get_pos()
         a=screen.blit(mouse, mouse_pos)
@@ -156,18 +165,29 @@ def shop():
                     bg = 'bg' + str(lvlbg) + '.png'
                     background = pygame.image.load(bg)
                     score00 -= costx
+                    costx+=5
+                    if lvlbg1<9:
+                        lvlbg1+=1
+                        bg1 = 'bg1' + str(lvlbg1) + '.png'
+                        background1 = pygame.image.load(bg1)
                     if lvlbg == 10:
                         x = 0
                         costx = 0
+                        widthskins1+=1000
                         # return
                 if check_collision(a,c) and score00 >= costy:
                     lvlskin += y
                     skin = 'c' + str(lvlskin) + '.png'
                     coin = pygame.image.load(skin)
                     score00 -= costy
+                    if lvlskin<6:
+                        lvlskin1+=1
+                        skin1 = 'c1' + str(lvlskin1) + '.png'
+                        skins=pygame.image.load(skin1)
                     if lvlskin == 7:
                         y = 0
                         costy = 0
+                        widthskins2+=1000
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
@@ -207,7 +227,7 @@ def play():
         width += speedw
         height += 30
 
-        screen.fill((0, 128, 0))  # Заливка фона игры (например, зеленым цветом)
+        screen.fill((100, 200, 0))  # Заливка фона игры (например, зеленым цветом)
         screen.blit(spikes, (0, 745))  # Нижние шипы
         screen.blit(spikes1, (0, -30))  # Верхние шипы
 
