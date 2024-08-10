@@ -50,8 +50,8 @@ font_bold = pygame.font.SysFont('times', 35, bold=True)
 
 # Основной экран
 screen = pygame.display.set_mode((500, 800))
-score0 = 900
-score00 = 900
+score0 = 893
+score00 = 400
 multitap = 1
 cost = 100
 costg = 10
@@ -180,7 +180,8 @@ def shop():
                     skin = 'c' + str(lvlskin) + '.png'
                     coin = pygame.image.load(skin)
                     score00 -= costy
-                    if lvlskin<6:
+                    costy+=5
+                    if lvlskin<7:
                         lvlskin1+=1
                         skin1 = 'c1' + str(lvlskin1) + '.png'
                         skins=pygame.image.load(skin1)
