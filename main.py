@@ -1,6 +1,7 @@
 import pygame
 import sys
 import random
+import tkinter as tk
 
 pygame.init()
 
@@ -118,9 +119,9 @@ def shop():
     while True:
         screen.fill((0, 128, 0))  # Заливка фона магазина (например, черным цветом)
 
-        backb = font1.render('BACK', True, 'White', 'Black')
+        backb = font.render('BACK', True, 'White', 'Black')
         backb1 = backb.get_rect()
-        backb1.center = (250, 750)
+        backb1.center = (250, 770)
 
         upb = font2.render('UPGRADE HOME', True, 'White', 'Black')
         upb1 = upb.get_rect()
